@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>upload模块快速使用</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/resources/css/public.css" media="all"/>
+</head>
+<body>
+
+<div class="layui-col-md3 layui-col-xs5">
+    <div class="layui-upload-list thumbBox mag0 magt3">
+        <img class="layui-upload-img thumbImg" src="/file/showImagByPath?path=images/2.jpg">
+    </div>
+</div>
+
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script>
+    layui.use(['upload','jquery'], function(){
+        var $ = layui.jquery;
+        var upload = layui.upload;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '.thumbBox', //绑定元素
+            url: '/file/uploadFile',
+            acceptMime: 'image/*',
+            field: 'mf',
+            method: "post",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
+            done: function (res, index, upload) {
+                var path = res.path;
+                $('.thumbImg').attr('src', '/file/showImagByPath?path=' + path);
+                $('.thumbBox').css("background", "#9c88ff");
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
